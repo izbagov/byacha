@@ -29,6 +29,7 @@
     "gulp-ruby-sass": "^4.0.0",
     "gulp-sass": "^4.0.2",
     "gulp-uglify": "^3.0.2",
+    "readable-stream": "^3.4.0",
     "rimraf": "^2.6.3"
   },
   "dependencies": {

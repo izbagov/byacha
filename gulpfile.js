@@ -7,6 +7,8 @@ const del = require('del');
 const browserSync = require('browser-sync');
 const babel = require('gulp-babel');
 const include = require('gulp-include');
+const uglify = require('gulp-uglify');
+const pipeline = require('readable-stream').pipeline;
 
 const paths = {
   src: {
@@ -35,23 +37,26 @@ function styles() {
     })
   ];
 
-  return src(paths.src.styles)
-    .pipe(sass().on('error', sass.logError))
-    .pipe(postcss(postcssConfig))
-    .pipe(dest(paths.dist.styles))
-    .pipe(browserSync.stream());
+  return pipeline(
+    src(paths.src.styles),
+    sass().on('error', sass.logError),
+    postcss(postcssConfig),
+    dest(paths.dist.styles),
+    browserSync.stream()
+  );
 }
 
 function scripts() {
-  return src(paths.src.js)
-    .pipe(
-      babel({
-        presets: ['@babel/env']
-      })
-    )
-    .pipe(include())
-    .pipe(dest(paths.dist.js))
-    .pipe(browserSync.stream());
+  return pipeline(
+    src(paths.src.js),
+    include(),
+    babel({
+      presets: ['@babel/env']
+    }),
+    uglify(),
+    dest(paths.dist.js),
+    browserSync.stream()
+  );
 }
 
 function clean() {
