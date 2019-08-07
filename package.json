@@ -1,0 +1,37 @@
+{
+  "name": "ezlife",
+  "version": "1.0.0",
+  "description": "Gulp boilerplate for webpages",
+  "main": "gulpfile.js",
+  "scripts": {
+    "gulp": "gulp"
+  },
+  "keywords": [
+    "gulp",
+    "boilerplate gulp"
+  ],
+  "browserslist": [
+    "last 10 versions"
+  ],
+  "author": "Ramazan Izbagov",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "autoprefixer": "^9.6.1",
+    "browser-sync": "^2.26.7",
+    "css-mqpacker": "^7.0.0",
+    "del": "^5.0.0",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-include": "^2.4.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-ruby-sass": "^4.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.2",
+    "rimraf": "^2.6.3"
+  },
+  "dependencies": {
+    "jquery": "^3.4.1"
+  }
+}
