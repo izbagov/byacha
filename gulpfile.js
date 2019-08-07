@@ -6,19 +6,20 @@ const mqpacker = require('css-mqpacker');
 const del = require('del');
 const browserSync = require('browser-sync');
 const babel = require('gulp-babel');
-const uglify = require('gulp-uglify');
 const include = require('gulp-include');
 
 const paths = {
   src: {
     root: './src/',
     styles: './src/scss/**/*.scss',
-    js: './src/js/*.js'
+    js: './src/js/*.js',
+    assets: './src/assets/**/*'
   },
   dist: {
     root: './dist/',
     styles: './dist/css',
-    js: './dist/js'
+    js: './dist/js',
+    assets: './dist/assets'
   }
 };
 
@@ -49,7 +50,6 @@ function scripts() {
       })
     )
     .pipe(include())
-    .pipe(uglify())
     .pipe(dest(paths.dist.js))
     .pipe(browserSync.stream());
 }
@@ -62,6 +62,10 @@ function html() {
   return src(paths.src.root + '*.html').pipe(dest(paths.dist.root));
 }
 
+function copyFiles() {
+  return src(paths.src.assets).pipe(dest(paths.dist.assets));
+}
+
 function watchFiles() {
   browserSync.init({
     server: {
@@ -70,10 +74,11 @@ function watchFiles() {
     open: false
   });
 
+  watch(paths.src.assets, copyFiles);
   watch(paths.src.styles, styles);
   watch(paths.src.js, scripts);
   watch('./src/*.html', html).on('change', browserSync.reload);
 }
 
-task('build', series(clean, parallel(styles, scripts, html)));
+task('build', series(clean, parallel(styles, scripts, html, copyFiles)));
 task('dev', series('build', watchFiles));
