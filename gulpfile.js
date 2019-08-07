@@ -76,7 +76,9 @@ function watchFiles() {
     server: {
       baseDir: './dist'
     },
-    open: false
+    open: false,
+    notice: false,
+    port: 8888
   });
 
   watch(paths.src.assets, copyFiles);
