@@ -39,7 +39,7 @@ function styles() {
 
   return pipeline(
     src(paths.src.styles),
-    sass().on('error', sass.logError),
+    sass({ outputStyle: 'compact' }).on('error', sass.logError),
     postcss(postcssConfig),
     dest(paths.dist.styles),
     browserSync.stream()
