@@ -33,6 +33,6 @@
     "rimraf": "^2.6.3"
   },
   "dependencies": {
-    "jquery": "^3.4.1"
+    "jquery": "^3.5.0"
   }
 }
