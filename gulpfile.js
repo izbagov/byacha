@@ -1,37 +1,41 @@
-const { src, dest, series, parallel, watch, task } = require('gulp');
-const sass = require('gulp-sass');
-const postcss = require('gulp-postcss');
-const autoprefixer = require('autoprefixer');
-const mqpacker = require('css-mqpacker');
-const del = require('del');
-const browserSync = require('browser-sync');
-const babel = require('gulp-babel');
-const uglify = require('gulp-uglify');
-const include = require('gulp-include');
+import gulp from 'gulp';
+import gulpSass from 'gulp-sass';
+import dartSass from 'sass';
+import postcss from 'gulp-postcss';
+import autoprefixer from 'autoprefixer';
+import mqpacker from 'css-mqpacker';
+import { deleteSync, deleteAsync } from 'del';
+import browserSync from 'browser-sync';
+import babel from 'gulp-babel';
+import include from 'gulp-include';
+
+const { src, dest, series, parallel, watch, task } = gulp;
+
+const sass = gulpSass(dartSass);
 
 const paths = {
   src: {
     root: './src/',
     styles: './src/scss/**/*.scss',
-    js: './src/js/*.js'
+    js: './src/js/*.js',
   },
   dist: {
     root: './dist/',
     styles: './dist/css',
-    js: './dist/js'
-  }
+    js: './dist/js',
+  },
 };
 
 function styles() {
   const postcssConfig = [
     autoprefixer({ cascade: false }),
     mqpacker({
-      sort: function(a, b) {
+      sort: function (a, b) {
         a = a.replace(/\D/g, '');
         b = b.replace(/\D/g, '');
         return b - a;
-      }
-    })
+      },
+    }),
   ];
 
   return src(paths.src.styles)
@@ -45,17 +49,16 @@ function scripts() {
   return src(paths.src.js)
     .pipe(
       babel({
-        presets: ['@babel/env']
-      })
+        presets: ['@babel/env'],
+      }),
     )
     .pipe(include())
-    .pipe(uglify())
     .pipe(dest(paths.dist.js))
     .pipe(browserSync.stream());
 }
 
-function clean() {
-  return del(['dist/*']);
+async function clean() {
+  return await deleteAsync(['dist/*']);
 }
 
 function html() {
@@ -65,9 +68,9 @@ function html() {
 function watchFiles() {
   browserSync.init({
     server: {
-      baseDir: './dist'
+      baseDir: './dist',
     },
-    open: false
+    open: false,
   });
 
   watch(paths.src.styles, styles);
