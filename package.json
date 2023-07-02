@@ -25,6 +25,7 @@
     "del": "^7.0.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
+    "gulp-file-include": "^2.3.0",
     "gulp-include": "^2.4.1",
     "gulp-postcss": "^9.0.1",
     "gulp-sass": "^5.1.0",

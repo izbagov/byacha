@@ -4,10 +4,11 @@ import dartSass from 'sass';
 import postcss from 'gulp-postcss';
 import autoprefixer from 'autoprefixer';
 import mqpacker from 'css-mqpacker';
-import { deleteSync, deleteAsync } from 'del';
+import { deleteAsync } from 'del';
 import browserSync from 'browser-sync';
 import babel from 'gulp-babel';
 import include from 'gulp-include';
+import fileInclude from 'gulp-file-include';
 
 const { src, dest, series, parallel, watch, task } = gulp;
 
@@ -62,7 +63,7 @@ async function clean() {
 }
 
 function html() {
-  return src(paths.src.root + '*.html').pipe(dest(paths.dist.root));
+  return src(paths.src.root + '*.html').pipe(fileInclude()).pipe(dest(paths.dist.root));
 }
 
 function watchFiles() {
