@@ -1,2 +1,2 @@
-//=require lib/jquery.min.js
-//=require common.js
+import { greeting } from './common.js';
+greeting();

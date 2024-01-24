@@ -6,8 +6,7 @@ import autoprefixer from 'autoprefixer';
 import mqpacker from 'css-mqpacker';
 import { deleteAsync } from 'del';
 import browserSync from 'browser-sync';
-import babel from 'gulp-babel';
-import include from 'gulp-include';
+import webpack from 'webpack-stream';
 import fileInclude from 'gulp-file-include';
 
 const { src, dest, series, parallel, watch, task } = gulp;
@@ -18,7 +17,7 @@ const paths = {
   src: {
     root: './src/',
     styles: './src/scss/**/*.scss',
-    js: './src/js/*.js',
+    js: './src/js/main.js',
   },
   dist: {
     root: './dist/',
@@ -49,11 +48,26 @@ function styles() {
 function scripts() {
   return src(paths.src.js)
     .pipe(
-      babel({
-        presets: ['@babel/env'],
+      webpack({
+        mode: 'production',
+        output: {
+          filename: 'main.js',
+        },
+        module: {
+          rules: [
+            {
+              test: /\.(js|jsx)$/,
+              use: {
+                loader: 'babel-loader',
+                options: {
+                  presets: [['@babel/preset-env', { targets: 'defaults' }]],
+                },
+              },
+            },
+          ],
+        },
       }),
     )
-    .pipe(include())
     .pipe(dest(paths.dist.js))
     .pipe(browserSync.stream());
 }
@@ -63,7 +77,9 @@ async function clean() {
 }
 
 function html() {
-  return src(paths.src.root + '*.html').pipe(fileInclude()).pipe(dest(paths.dist.root));
+  return src(paths.src.root + '*.html')
+    .pipe(fileInclude())
+    .pipe(dest(paths.dist.root));
 }
 
 function watchFiles() {
