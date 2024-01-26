@@ -77,7 +77,7 @@ async function clean() {
 }
 
 function html() {
-  return src(paths.src.root + '*.html')
+  return src(paths.src.root + '**/*.html')
     .pipe(fileInclude())
     .pipe(dest(paths.dist.root));
 }
@@ -92,7 +92,7 @@ function watchFiles() {
 
   watch(paths.src.styles, styles);
   watch(paths.src.js, scripts);
-  watch('./src/*.html', html).on('change', browserSync.reload);
+  watch('./src/**/*.html', html).on('change', browserSync.reload);
 }
 
 task('build', series(clean, parallel(styles, scripts, html)));
