@@ -4,7 +4,8 @@
   "description": "Gulp boilerplate for webpages",
   "main": "gulpfile.js",
   "scripts": {
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "build": "gulp build"
   },
   "keywords": [
     "gulp",
@@ -24,11 +25,15 @@
     "css-mqpacker": "^7.0.0",
     "del": "^7.0.0",
     "gulp": "^4.0.2",
+    "gulp-changed": "^5.0.2",
     "gulp-file-include": "^2.3.0",
+    "gulp-if": "^3.0.0",
+    "gulp-imagemin": "^9.0.0",
     "gulp-include": "^2.4.1",
     "gulp-postcss": "^9.0.1",
     "gulp-sass": "^5.1.0",
     "gulp-uglify": "^3.0.2",
+    "imagemin-pngquant": "^9.0.2",
     "rimraf": "^5.0.1",
     "sass": "^1.63.6",
     "webpack-stream": "^7.0.0"
